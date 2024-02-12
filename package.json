@@ -1,0 +1,11 @@
+{
+  "name": "s48_nammabiryanihub",
+  "version": "1.0.0",
+  "description": "**NammaBiryaniHub**",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC"
+}
