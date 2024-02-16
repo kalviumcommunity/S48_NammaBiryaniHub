@@ -1,9 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const { MongoClient } = require('mongodb');
 
 const app = express();
 const port = process.env.PUBLIC_PORT || 3000;
-const mongoDbUri = "mongodb+srv://prabhasvarma017:Bahubali17@cluster1.ii0jfoc.mongodb.net/";
+const mongoDbUri = process.env.MONGODB_URI;
 
 const client = new MongoClient(mongoDbUri, { useNewUrlParser: true, useUnifiedTopology: true });
 
