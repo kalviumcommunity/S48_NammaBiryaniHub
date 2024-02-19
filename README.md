@@ -6,3 +6,5 @@
 - The list will also contain the exact location, review, rating of the biryani. 
 
 **RENDER** deployed link: https://s48-nammabiryanihub-prabhas-varma.onrender.com/
+
+**CloudFlare** deployed link: https://nammabiryanihub.pages.dev/
