@@ -1,12 +1,15 @@
-import React from "react";
+import React from 'react';
+import { BiryaniPlace, dummyBiryaniPlaces } from './components/BiryaniPlace';
 import "./App.css"
 
-function App(){
+const App = () => {
   return (
-    <div>
-
-      <h1>NammaBiryaniHub</h1>
+    <div className="app-container">
+      {dummyBiryaniPlaces.map((place, index) => (
+        <BiryaniPlace key={index} {...place} />
+      ))}
     </div>
-  )
-}
-export default App
+  );
+};
+
+export default App;

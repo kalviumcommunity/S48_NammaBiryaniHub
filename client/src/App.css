@@ -3,3 +3,10 @@ body{
   align-items: baseline;
   text-align: center;
 }
+.app-container {
+  margin: 35px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; 
+  gap: 90px; 
+}
