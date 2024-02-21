@@ -23,6 +23,20 @@ app.get("/ping", (req, res) => {
   res.json({ message: "pong" });
 });
 
+app.post("/api/addEntity", async (req, res) => {
+  try {
+    const { name } = req.body;
+    const newEntity = new UserModel({ name });
+    await newEntity.save();
+
+    res.json({ success: true, message: "Entity added successfully" });
+  } catch (error) {
+    console.error("Error adding entity:", error);
+    res.status(500).json({ success: false, message: "Failed to add entity" });
+  }
+});
+
+
 async function GetAll() {
   let result = await UserModel.find();
   return result;
