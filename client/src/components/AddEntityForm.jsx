@@ -15,7 +15,7 @@ const AddEntityForm = ({ onEntityAdded, fetchData }) => {
         name: name,
         openingHours: openingHours,
         cuisineType: cuisineType,
-        menu: menu.split(",").map((item) => item.trim()), // Split menu string into an array
+        menu: menu.split(",").map((item) => item.trim()), 
         contactInfo: contactInfo,
       });
 
@@ -69,7 +69,7 @@ const AddEntityForm = ({ onEntityAdded, fetchData }) => {
         onChange={(e) => setContactInfo(e.target.value)}
       />
 
-      <button onClick={handleAddEntity}>Add Entity</button>
+      <button id="add-ent"onClick={handleAddEntity}>Add Entity</button>
     </div>
   );
 };
