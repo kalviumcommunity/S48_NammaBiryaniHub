@@ -36,6 +36,34 @@ app.post("/api/addEntity", async (req, res) => {
   }
 });
 
+app.put("/api/updateEntity/:id", async (req, res) => {
+  try {
+    const entityId = req.params.id;
+    const { name } = req.body;
+
+    // Find and update the entity in the database
+    await UserModel.findByIdAndUpdate(entityId, { name });
+
+    res.json({ success: true, message: "Entity updated successfully" });
+  } catch (error) {
+    console.error("Error updating entity:", error);
+    res.status(500).json({ success: false, message: "Failed to update entity" });
+  }
+});
+
+app.delete("/api/deleteEntity/:id", async (req, res) => {
+  try {
+    const entityId = req.params.id;
+
+    // Find and delete the entity from the database
+    await UserModel.findByIdAndDelete(entityId);
+
+    res.json({ success: true, message: "Entity deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting entity:", error);
+    res.status(500).json({ success: false, message: "Failed to delete entity" });
+  }
+});
 
 async function GetAll() {
   let result = await UserModel.find();
