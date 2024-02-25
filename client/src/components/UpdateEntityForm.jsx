@@ -5,13 +5,13 @@ import "./UpdateEntityForm.css";
 const UpdateEntityForm = ({ entityId, onEntityUpdated, fetchData }) => {
   const [dish, setDish] = useState("");
   const [restaurantName, setRestaurantName] = useState("");
-  const [openingHours, setOpeningHours] = useState("");
+  // const [openingHours, setOpeningHours] = useState("");
   const [cuisineType, setCuisineType] = useState("");
   const [menu, setMenu] = useState("");
-  const [contactInfo, setContactInfo] = useState("");
+  // const [contactInfo, setContactInfo] = useState("");
   const [rating, setRating] = useState("");
   const [review, setReview] = useState("");
-  const [image, setImage] = useState("");
+  // const [image, setImage] = useState("");
 
   // Fetch the existing data before rendering the form
   useEffect(() => {
@@ -23,13 +23,13 @@ const UpdateEntityForm = ({ entityId, onEntityUpdated, fetchData }) => {
         const entityData = response.data.data;
         setDish(entityData.dish);
         setRestaurantName(entityData.restaurantName);
-        setOpeningHours(entityData.openingHours);
+        // setOpeningHours(entityData.openingHours);
         setCuisineType(entityData.cuisineType);
         setMenu(entityData.menu.join(", "));
-        setContactInfo(entityData.contactInfo);
+        // setContactInfo(entityData.contactInfo);
         setRating(entityData.rating);
         setReview(entityData.review);
-        setImage(entityData.image);
+        // setImage(entityData.image);
       })
       .catch((error) => console.error("Error fetching entity details:", error));
   }, [entityId]);
@@ -39,25 +39,25 @@ const UpdateEntityForm = ({ entityId, onEntityUpdated, fetchData }) => {
       const response = await axios.put(`http://localhost:3000/api/updateEntity/${entityId}`, {
         dish: dish,
         restaurantName: restaurantName,
-        openingHours: openingHours,
+        // openingHours: openingHours,
         cuisineType: cuisineType,
         menu: menu.split(",").map((item) => item.trim()),
-        contactInfo: contactInfo,
+        // contactInfo: contactInfo,
         rating: rating,
         review: review,
-        image: image,
+        // image: image,
       });
 
       if (response.data.success) {
         setDish("");
         setRestaurantName("");
-        setOpeningHours("");
+        // setOpeningHours("");
         setCuisineType("");
         setMenu("");
-        setContactInfo("");
+        // setContactInfo("");
         setRating("");
         setReview("");
-        setImage("");
+        // setImage("");
         onEntityUpdated();
         fetchData();
       } else {
