@@ -6,21 +6,21 @@
 // import "./App.css";
 
 // const App = () => {
-//   const [places, setPlaces] = useState([]);
+  // const [places, setPlaces] = useState([]);
 //   const [selectedEntityId, setSelectedEntityId] = useState(null);
 
-//   const fetchData = () => {
-//     axios
-//       .get("http://localhost:3000/getBiryaniP")
-//       .then((response) => {
-//         setPlaces(response.data.data);
-//       })
-//       .catch((error) => console.error("Error fetching data:", error));
-//   };
+  // const fetchData = () => {
+  //   axios
+  //     .get("http://localhost:3000/getBiryaniP")
+  //     .then((response) => {
+  //       setPlaces(response.data.data);
+  //     })
+  //     .catch((error) => console.error("Error fetching data:", error));
+  // };
 
-//   useEffect(() => {
-//     fetchData();
-//   }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
 //   const handleEntityAdded = () => {
 //     fetchData();
@@ -65,7 +65,8 @@
 
 // export default App;
 
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./pages/Navbar";
 import Home from "./pages/Home";
@@ -74,6 +75,27 @@ import Profile from "./pages/Profile";
 import "./App.css";
 
 const App = () => {
+
+  const [places, setPlaces] = useState([]);
+
+
+
+  const fetchData = () => {
+    axios
+      .get("http://localhost:3000/getBiryaniP")
+      .then((response) => {
+        setPlaces(response.data.data);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleEntityAdded = () => {
+    fetchData();
+  };
   return (
       <div className="app-container">
         <Router>
@@ -81,7 +103,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/all-biryanis" element={<BiryaniList />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile" element={<Profile onEntityAdded={handleEntityAdded} fetchData={fetchData} />} />
           </Routes>
         </Router>
       </div>

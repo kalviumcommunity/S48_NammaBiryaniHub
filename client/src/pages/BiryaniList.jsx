@@ -50,20 +50,19 @@ const BiryaniList = () => {
               <div className="content">
                 <h2>Name: {place.dish}</h2>
                 <p>Restaurent Name: {place.restaurantName}</p>
-                <p>Opening Hours {place.openingHours}</p>
+                <p>Opening Hours: {place.openingHours}</p>
                 <p>Cuisine Type: {place.cuisineType}</p>
-                
                 <p>Contact Info: {place.contactInfo}</p>
                 <p>Rating: {place.rating}</p>
                 <p id="review">Review: {place.review}</p>
-                
+
                 <div className="edit-delete-buttons">
                   <button id="edit" onClick={() => handleEditClick(place._id)}>
                     Edit
                   </button>
                   <button onClick={() => handleMenuClick(place.menu)}>
-                  Menu
-                </button>
+                    Menu
+                  </button>
                 </div>
               </div>
 
@@ -76,7 +75,11 @@ const BiryaniList = () => {
                     onEntityUpdated={handleEntityUpdated}
                     fetchData={fetchData}
                   />
-                  <DeleteButton entityId={place._id} fetchData={fetchData} />
+                  <DeleteButton
+                    entityId={place._id}
+                    onEntityDeleted={handleEntityUpdated}
+                    fetchData={fetchData}
+                  />
                   <button
                     className="cancel-btn"
                     onClick={() => setSelectedEntityId(null)}
