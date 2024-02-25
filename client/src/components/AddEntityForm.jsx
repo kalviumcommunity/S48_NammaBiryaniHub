@@ -1,32 +1,45 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./AddEntityForm.css"
+import "./AddEntityForm.css";
 
 const AddEntityForm = ({ onEntityAdded, fetchData }) => {
-  const [name, setName] = useState("");
+  const [dish, setDish] = useState("");
+  const [restaurantName, setRestaurantName] = useState("");
   const [openingHours, setOpeningHours] = useState("");
   const [cuisineType, setCuisineType] = useState("");
   const [menu, setMenu] = useState("");
   const [contactInfo, setContactInfo] = useState("");
+  const [rating, setRating] = useState(""); // New state variable for rating
+  const [review, setReview] = useState(""); // New state variable for review
+  const [image, setImage] = useState(""); // New state variable for image
 
   const handleAddEntity = async () => {
     try {
       const response = await axios.post("http://localhost:3000/api/addEntity", {
-        name: name,
+        dish: dish,
+        restaurantName: restaurantName,
         openingHours: openingHours,
         cuisineType: cuisineType,
-        menu: menu.split(",").map((item) => item.trim()), 
+        menu: menu.split(",").map((item) => item.trim()),
         contactInfo: contactInfo,
+        rating: rating,
+        review: review,
+        image: image,
       });
 
       if (response.data.success) {
-        setName("");
+        setDish("");
+        setRestaurantName("");
         setOpeningHours("");
         setCuisineType("");
         setMenu("");
         setContactInfo("");
+        setRating("");
+        setReview("");
+        setImage("");
+        console.log(response.data);
         onEntityAdded();
-        fetchData(); 
+        fetchData();
       } else {
         console.error("Failed to add entity");
       }
@@ -37,9 +50,19 @@ const AddEntityForm = ({ onEntityAdded, fetchData }) => {
 
   return (
     <div className="add-entity-form">
-      
-      <label>Name:</label>
-      <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+      <label>Dish:</label>
+      <input
+        type="text"
+        value={dish}
+        onChange={(e) => setDish(e.target.value)}
+      />
+
+      <label>Restaurant Name:</label>
+      <input
+        type="text"
+        value={restaurantName}
+        onChange={(e) => setRestaurantName(e.target.value)}
+      />
 
       <label>Opening Hours:</label>
       <input
@@ -69,7 +92,30 @@ const AddEntityForm = ({ onEntityAdded, fetchData }) => {
         onChange={(e) => setContactInfo(e.target.value)}
       />
 
-      <button id="add-ent"onClick={handleAddEntity}>Add Entity</button>
+      <label>Rating:</label>
+      <input
+        type="text"
+        value={rating}
+        onChange={(e) => setRating(e.target.value)}
+      />
+
+      <label>Review:</label>
+      <input
+        type="text"
+        value={review}
+        onChange={(e) => setReview(e.target.value)}
+      />
+
+      <label>Image(address):</label>
+      <input
+        type="text"
+        value={image}
+        onChange={(e) => setImage(e.target.value)}
+      />
+
+      <button id="add-ent" onClick={handleAddEntity}>
+        Add Entity
+      </button>
     </div>
   );
 };
