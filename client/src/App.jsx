@@ -68,15 +68,21 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+
 import Navbar from "./pages/Navbar";
 import Home from "./pages/Home";
 import BiryaniList from "./pages/BiryaniList";
 import Profile from "./pages/Profile";
+import About from "./pages/About"; 
+import Login from "./pages/Login"; 
 import "./App.css";
 
 const App = () => {
 
   const [places, setPlaces] = useState([]);
+  const [username, setUsername] = useState("");
+
 
 
 
@@ -96,14 +102,43 @@ const App = () => {
   const handleEntityAdded = () => {
     fetchData();
   };
+
+  const handleLogin = (username) => {
+    setUsername(username);
+  };
+
+  const handleLogout = () => {
+    axios.post("http://localhost:3000/api/logout")
+      .then(() => {
+        setUsername("");
+      })
+      .catch((error) => console.error("Error logging out:", error));
+  };
+
   return (
       <div className="app-container">
         <Router>
-        <Navbar />
+        <Navbar username={username} onLogout={handleLogout}/>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/all-biryanis" element={<BiryaniList />} />
-            <Route path="/profile" element={<Profile onEntityAdded={handleEntityAdded} fetchData={fetchData} />} />
+            {/* <Route path="/profile" element={<Profile onEntityAdded={handleEntityAdded} fetchData={fetchData} />} /> */}
+            <Route
+            path="/profile"
+            element={
+              username ? (
+                <Profile
+                  onEntityAdded={handleEntityAdded}
+                  fetchData={fetchData}
+                />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+          <Route path="/about" element={<About />} />
+          <Route path="/login" element={<Login onLogin={handleLogin} />} />
+
           </Routes>
         </Router>
       </div>

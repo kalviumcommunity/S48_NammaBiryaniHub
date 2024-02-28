@@ -2,12 +2,20 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const routes = require("./routes");
+const cookieParser = require("cookie-parser");
 
-const { UserModel, addEntitySchema, updateEntitySchema } = require("./models/BiryaniP");
-
+const {
+  UserModel,
+  signupSchema,
+  addEntitySchema,
+  updateEntitySchema,
+  LoginModel,
+  addLogin,
+} = require("./models/BiryaniP");
 const app = express();
 const cors = require("cors");
 app.use(cors());
+app.use(cookieParser());
 
 const port = process.env.PUBLIC_PORT || 3000;
 const mongoDbUri = process.env.MONGODB_URI;
@@ -24,15 +32,99 @@ app.get("/ping", (req, res) => {
   res.json({ message: "pong" });
 });
 
+app.post("/api/signup", async (req, res) => {
+  const { username, password, email } = req.body;
+
+  // Validate the signup data
+  const { error } = signupSchema.validate({ username, password, email });
+
+  if (error) {
+    return res
+      .status(400)
+      .json({ success: false, message: error.details[0].message });
+  }
+
+  try {
+    // Check if the user already exists
+    const existingUser = await LoginModel.findOne({ username });
+
+    if (existingUser) {
+      return res.status(400).json({
+        success: false,
+        message: "Username already exists. Please choose a different one.",
+      });
+    }
+
+    // If the user doesn't exist, create a new user
+    const newUser = new LoginModel({ username, password, emailAddress: email });
+    await newUser.save();
+
+    // Set a cookie or perform any other necessary actions
+    res.cookie("username", username);
+
+    res.json({
+      success: true,
+      message: "Signup successful",
+      username,
+    });
+    console.log("Signup success",req.cookies.username);
+  } catch (error) {
+    console.error("Error during signup:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
+
+
+
+app.post("/api/login", async (req, res) => {
+  const { username, password, email } = req.body;
+
+  const { error } = addLogin.validate({ username, password, email });
+
+  if (error) {
+    return res
+      .status(400)
+      .json({ success: false, message: error.details[0].message });
+  }
+
+  try {
+    const user = await LoginModel.findOne({ username });
+
+    if (user) {
+      // console.log(user.username);
+      res.cookie("username", username);
+      const usernameIMP = req.cookies.username;
+
+      res.json({
+        success: true,
+        message: usernameIMP,
+        username,
+      });
+      console.log("success",req.cookies.username);
+    } else {
+      res.status(200).json({ success: false, message: "Invalid credentials" });
+    }
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
+
+app.post("/api/logout", (req, res) => {
+  res.clearCookie("username");
+  res.json({ success: true, message: "Logout successful" });
+});
+
 app.post("/api/addEntity", async (req, res) => {
   try {
-
     const { error } = addEntitySchema.validate(req.body);
 
     if (error) {
-      return res.status(400).json({ success: false, message: error.details[0].message });
+      return res
+        .status(400)
+        .json({ success: false, message: error.details[0].message });
     }
- 
+
     const name = req.body;
     const newEntity = new UserModel(name);
     let x = await newEntity.save();
@@ -51,7 +143,9 @@ app.put("/api/updateEntity/:id", async (req, res) => {
     const { error } = updateEntitySchema.validate(req.body);
 
     if (error) {
-      return res.status(400).json({ success: false, message: error.details[0].message });
+      return res
+        .status(400)
+        .json({ success: false, message: error.details[0].message });
     }
 
     const name = req.body;
