@@ -89,18 +89,18 @@ app.post("/api/login", async (req, res) => {
 
   try {
     const user = await LoginModel.findOne({ username });
+    await user.save();
 
     if (user) {
       // console.log(user.username);
       res.cookie("username", username);
-      const usernameIMP = req.cookies.username;
 
       res.json({
         success: true,
-        message: usernameIMP,
+        message: "Login successful",
         username,
       });
-      console.log("success",req.cookies.username);
+      console.log("login success",username);
     } else {
       res.status(200).json({ success: false, message: "Invalid credentials" });
     }
