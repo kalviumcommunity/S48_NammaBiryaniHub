@@ -1,13 +1,47 @@
-// Navbar.jsx
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie"; // Import js-cookie library
 import "../css/Navbar.css";
 
-const Navbar = ({ username, onLogout }) => {
+// ...
+
+// const username = Cookies.get('username');
+// console.log('Username:', username);
+
+const Navbar = ({  }) => {
+  // const handleLogout = async () => {
+  //   try {
+  //     const response = await fetch("http://your-server-url/api/logout", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       credentials: "include", // Include credentials (cookies) in the request
+  //     });
+
+  //     if (response.ok) {
+  //       // Clear local storage and cookies
+  //       localStorage.removeItem("username");
+  //       Cookies.remove("usernameCookie");
+
+  //       // Invoke the onLogout callback passed from the parent component
+  //       onLogout();
+
+  //       console.log("Logout successful");
+  //     } else {
+  //       console.error("Logout failed");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error during logout:", error);
+  //   }
+  // };
+
   const handleSearch = () => {
-    // Your search logic here
     console.log("Searching...");
   };
+  const username = Cookies.get("usernameCookie");
+  let x = localStorage.getItem("username");
+  console.log("Username:", username);
 
   return (
     <nav className="navbar">
@@ -35,9 +69,9 @@ const Navbar = ({ username, onLogout }) => {
             <Link id="profile" to="/profile">
               Profile
             </Link>
-            <button id="logoutButton" onClick={onLogout}>
+            {/* <button id="logoutButton" onClick={handleLogout}>
               Logout
-            </button>
+            </button> */}
           </>
         ) : (
           <Link id="login" to="/login">

@@ -76,6 +76,7 @@ import BiryaniList from "./pages/BiryaniList";
 import Profile from "./pages/Profile";
 import About from "./pages/About"; 
 import Login from "./pages/Login"; 
+import Cookies from "js-cookie";
 import "./App.css";
 
 const App = () => {
@@ -85,6 +86,7 @@ const App = () => {
 
 
 
+  const x = Cookies.get("usernameCookie");
 
   const fetchData = () => {
     axios
@@ -118,7 +120,7 @@ const App = () => {
   return (
       <div className="app-container">
         <Router>
-        <Navbar username={username} onLogout={handleLogout}/>
+        <Navbar username={username} />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/all-biryanis" element={<BiryaniList />} />
@@ -126,7 +128,7 @@ const App = () => {
             <Route
             path="/profile"
             element={
-              username ? (
+              x ? (
                 <Profile
                   onEntityAdded={handleEntityAdded}
                   fetchData={fetchData}

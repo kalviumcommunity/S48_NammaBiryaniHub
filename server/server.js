@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const routes = require("./routes");
 const cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken")
 
 const {
   UserModel,
@@ -20,6 +21,7 @@ app.use(cookieParser());
 const port = process.env.PUBLIC_PORT || 3000;
 const mongoDbUri = process.env.MONGODB_URI;
 
+const secretKey = process.env.JWT_SECRET_KEY ;
 async function Connection() {
   await mongoose.connect(mongoDbUri);
   console.log("connected to DB");
@@ -37,6 +39,8 @@ app.post("/api/signup", async (req, res) => {
 
   // Validate the signup data
   const { error } = signupSchema.validate({ username, password, email });
+
+
 
   if (error) {
     return res
@@ -59,15 +63,20 @@ app.post("/api/signup", async (req, res) => {
     const newUser = new LoginModel({ username, password, emailAddress: email });
     await newUser.save();
 
-    // Set a cookie or perform any other necessary actions
     res.cookie("username", username);
+
+    const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
+
+    res.cookie("jwt", token);
 
     res.json({
       success: true,
       message: "Signup successful",
       username,
+      token,
     });
-    console.log("Signup success",req.cookies.username);
+    console.log("Signup success",username);
+    console.log("Signup success. Token set:", token);
   } catch (error) {
     console.error("Error during signup:", error);
     res.status(500).json({ success: false, message: "Internal Server Error" });
@@ -93,14 +102,18 @@ app.post("/api/login", async (req, res) => {
 
     if (user) {
       // console.log(user.username);
-      res.cookie("username", username);
 
+      const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
+      res.cookie("jwt", token);
+      res.cookie("username", username);
       res.json({
         success: true,
         message: "Login successful",
         username,
+        token,
       });
       console.log("login success",username);
+      console.log("Login success. Token set:", token);
     } else {
       res.status(200).json({ success: false, message: "Invalid credentials" });
     }
@@ -112,6 +125,7 @@ app.post("/api/login", async (req, res) => {
 
 app.post("/api/logout", (req, res) => {
   res.clearCookie("username");
+  res.clearCookie("jwt");
   res.json({ success: true, message: "Logout successful" });
 });
 
@@ -184,6 +198,29 @@ app.get("/getBiryaniP", async (req, res) => {
   let value = await GetAll();
   res.send({ data: value });
 });
+
+app.get("/api/protected", verifyToken, (req, res) => {
+  // If the control reaches here, it means the token is valid
+  res.json({ success: true, message: "Access to protected resource granted" });
+});
+function verifyToken(req, res, next) {
+  const token = req.cookies.jwt;
+
+  if (!token) {
+    return res.status(403).json({ success: false, message: "Token not provided" });
+  }
+
+  jwt.verify(token, secretKey, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ success: false, message: "Invalid token" });
+    }
+
+    // Attach the decoded data to the request object for later use if needed
+    req.user = decoded;
+    next();
+  });
+}
+
 
 Connection().then(() => {
   app.listen(port, () => {
