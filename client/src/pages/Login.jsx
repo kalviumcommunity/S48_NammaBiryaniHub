@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import "../css/login.css"
+import "../css/login.css";
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState("");
@@ -17,7 +18,11 @@ const Login = ({ onLogin }) => {
         email: email,
       });
   
-      console.log("Server Response:", response);
+      localStorage.setItem("token", response.data.token);
+      Cookies.set("tokenCookie", response.data.token);
+
+      localStorage.setItem("username", response.data.username);
+      Cookies.set("usernameCookie", response.data.username);
   
       if (response.data.success) {
         setUsername("");
@@ -25,24 +30,31 @@ const Login = ({ onLogin }) => {
         setEmail("");
         onLogin();
         navigate("/all-biryanis");
-
       } else {
         console.error("Login failed:", response.data.message);
       }
+  
+      console.log("Server Response:", response);
     } catch (error) {
       console.error("Error logging in:", error);
     }
   };
-  const handleSignup = async () => {
+  
+  const handleSignup = async (e) => {
+    e.preventDefault();
     try {
       const response = await axios.post("http://localhost:3000/api/signup", {
         username: username,
         password: password,
         email: email,
       });
+  
+      localStorage.setItem("token", response.data.token);
+      Cookies.set("tokenCookie", response.data.token);
 
-      console.log("Server Response:", response);
-
+      localStorage.setItem("username", response.data.username);
+      Cookies.set("usernameCookie", response.data.username);
+  
       if (response.data.success) {
         setUsername("");
         setPassword("");
@@ -52,11 +64,13 @@ const Login = ({ onLogin }) => {
       } else {
         console.error("Signup failed:", response.data.message);
       }
+  
+      console.log("Server Response:", response);
     } catch (error) {
       console.error("Error signing up:", error);
     }
   };
-
+  
   return (
     <div>
       <h2>Login/Signup Page</h2>

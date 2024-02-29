@@ -6,8 +6,8 @@ const UpdateEntityForm = ({ entityId, onEntityUpdated, fetchData }) => {
   const [dish, setDish] = useState("");
   const [restaurantName, setRestaurantName] = useState("");
   // const [openingHours, setOpeningHours] = useState("");
-  const [cuisineType, setCuisineType] = useState("");
-  const [menu, setMenu] = useState("");
+  // const [cuisineType, setCuisineType] = useState("");
+  // const [menu, setMenu] = useState("");
   // const [contactInfo, setContactInfo] = useState("");
   const [rating, setRating] = useState("");
   const [review, setReview] = useState("");
@@ -24,8 +24,8 @@ const UpdateEntityForm = ({ entityId, onEntityUpdated, fetchData }) => {
         setDish(entityData.dish);
         setRestaurantName(entityData.restaurantName);
         // setOpeningHours(entityData.openingHours);
-        setCuisineType(entityData.cuisineType);
-        setMenu(entityData.menu.join(", "));
+        // setCuisineType(entityData.cuisineType);
+        // setMenu(entityData.menu.join(", "));
         // setContactInfo(entityData.contactInfo);
         setRating(entityData.rating);
         setReview(entityData.review);
@@ -40,8 +40,8 @@ const UpdateEntityForm = ({ entityId, onEntityUpdated, fetchData }) => {
         dish: dish,
         restaurantName: restaurantName,
         // openingHours: openingHours,
-        cuisineType: cuisineType,
-        menu: menu.split(",").map((item) => item.trim()),
+        // cuisineType: cuisineType,
+        // menu: menu.split(",").map((item) => item.trim()),
         // contactInfo: contactInfo,
         rating: rating,
         review: review,
@@ -52,8 +52,8 @@ const UpdateEntityForm = ({ entityId, onEntityUpdated, fetchData }) => {
         setDish("");
         setRestaurantName("");
         // setOpeningHours("");
-        setCuisineType("");
-        setMenu("");
+        // setCuisineType("");
+        // setMenu("");
         // setContactInfo("");
         setRating("");
         setReview("");
@@ -78,7 +78,7 @@ const UpdateEntityForm = ({ entityId, onEntityUpdated, fetchData }) => {
       <input type="text" value={restaurantName} onChange={(e) => setRestaurantName(e.target.value)} />
 
       {/* <label>Opening Hours:</label>
-      <input type="text" value={openingHours} onChange={(e) => setOpeningHours(e.target.value)} /> */}
+      <input type="text" value={openingHours} onChange={(e) => setOpeningHours(e.target.value)} />
 
       <label>Cuisine Type:</label>
       <input type="text" value={cuisineType} onChange={(e) => setCuisineType(e.target.value)} />
@@ -86,7 +86,7 @@ const UpdateEntityForm = ({ entityId, onEntityUpdated, fetchData }) => {
       <label>Menu:</label>
       <input type="text" value={menu} onChange={(e) => setMenu(e.target.value)} />
 
-      {/* <label>Contact Info:</label>
+      <label>Contact Info:</label>
       <input type="text" value={contactInfo} onChange={(e) => setContactInfo(e.target.value)} /> */}
 
       <label>Rating:</label>

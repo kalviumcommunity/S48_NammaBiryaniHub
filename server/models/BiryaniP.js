@@ -15,8 +15,6 @@ const UserSchema = new mongoose.Schema({
 
 const UserModel = mongoose.model("place", UserSchema);
 
-
-
 const LoginSchema = new mongoose.Schema({
   username: String,
   password: String,
@@ -24,7 +22,6 @@ const LoginSchema = new mongoose.Schema({
 });
 
 const LoginModel = mongoose.model("user", LoginSchema);
-
 
 const addEntitySchema = Joi.object({
   dish: Joi.string().required(),
@@ -41,13 +38,13 @@ const addEntitySchema = Joi.object({
 const updateEntitySchema = Joi.object({
   dish: Joi.string(),
   restaurantName: Joi.string(),
-  openingHours: Joi.string(),
-  cuisineType: Joi.string(),
-  menu: Joi.array().items(Joi.string()),
-  contactInfo: Joi.string(),
+  // openingHours: Joi.string(),
+  // cuisineType: Joi.string(),
+  // menu: Joi.array().items(Joi.string()),
+  // contactInfo: Joi.string(),
   rating: Joi.string(),
   review: Joi.string(),
-  image: Joi.string().uri(),
+  // image: Joi.string().uri(),
 });
 
 const addLogin = Joi.object({
