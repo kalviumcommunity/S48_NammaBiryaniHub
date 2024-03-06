@@ -1,13 +1,19 @@
-import React from "react";
-import "../css/About.css"; 
+// // Home.js
 
-const Home = () => {
-  return (
-    <div className="home-container">
-      <h1>About</h1>
-      {/* Add your home content */}
-    </div>
-  );
-};
+// import React, { useState } from "react";
+// import "../css/About.css";
+// // import Entity from "./Entity";
+// import UserData from "./UserData";
+// import Revies from "../components/Revies";
 
-export default Home;
+
+// const Home = () => {
+//     return (
+//     <div className="home-container">
+//               <Revies />
+
+//     </div>
+//   );
+// };
+
+// export default Home;

@@ -59,4 +59,33 @@ const signupSchema = Joi.object({
   email: Joi.string().email().required(),
 });
 
-module.exports = { UserModel, LoginModel, addEntitySchema, updateEntitySchema, addLogin, signupSchema };
+const reviewAdd = new mongoose.Schema({
+  dish: String,
+  restaurantName: String,
+  rating: String,
+  review: String,
+  userId: String,
+  username: String,
+});
+
+const reviewJoi = Joi.object({
+  dish: Joi.string().required(),
+  restaurantName: Joi.string().required(),
+  rating: Joi.string().required(),
+  review: Joi.string().required(),
+  userId: Joi.string().required(),
+  username: Joi.string().required(),
+});
+
+const reviewModel = mongoose.model("review", reviewAdd);
+
+module.exports = {
+  UserModel,
+  LoginModel,
+  reviewModel,
+  addEntitySchema,
+  updateEntitySchema,
+  addLogin,
+  signupSchema,
+  reviewJoi,
+};

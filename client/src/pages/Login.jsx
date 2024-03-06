@@ -17,13 +17,15 @@ const Login = ({ onLogin }) => {
         password: password,
         email: email,
       });
-  
+       localStorage.setItem("userID", response.data.userId);
+      console.log("sdfsdfsdf-xyz", localStorage.getItem("userID"));
       localStorage.setItem("token", response.data.token);
       Cookies.set("tokenCookie", response.data.token);
+      console.log(response.data);
 
       localStorage.setItem("username", response.data.username);
       Cookies.set("usernameCookie", response.data.username);
-  
+
       if (response.data.success) {
         setUsername("");
         setPassword("");
@@ -33,13 +35,13 @@ const Login = ({ onLogin }) => {
       } else {
         console.error("Login failed:", response.data.message);
       }
-  
+
       console.log("Server Response:", response);
     } catch (error) {
       console.error("Error logging in:", error);
     }
   };
-  
+
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
@@ -48,13 +50,13 @@ const Login = ({ onLogin }) => {
         password: password,
         email: email,
       });
-  
+     
       localStorage.setItem("token", response.data.token);
       Cookies.set("tokenCookie", response.data.token);
 
       localStorage.setItem("username", response.data.username);
       Cookies.set("usernameCookie", response.data.username);
-  
+
       if (response.data.success) {
         setUsername("");
         setPassword("");
@@ -64,13 +66,13 @@ const Login = ({ onLogin }) => {
       } else {
         console.error("Signup failed:", response.data.message);
       }
-  
+
       console.log("Server Response:", response);
     } catch (error) {
       console.error("Error signing up:", error);
     }
   };
-  
+
   return (
     <div>
       <h2>Login/Signup Page</h2>

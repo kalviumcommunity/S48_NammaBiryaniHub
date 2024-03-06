@@ -3,7 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const routes = require("./routes");
 const cookieParser = require("cookie-parser");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 
 const {
   UserModel,
@@ -12,6 +12,8 @@ const {
   updateEntitySchema,
   LoginModel,
   addLogin,
+  reviewModel,
+  reviewJoi,
 } = require("./models/BiryaniP");
 const app = express();
 const cors = require("cors");
@@ -21,7 +23,7 @@ app.use(cookieParser());
 const port = process.env.PUBLIC_PORT || 3000;
 const mongoDbUri = process.env.MONGODB_URI;
 
-const secretKey = process.env.JWT_SECRET_KEY ;
+const secretKey = process.env.JWT_SECRET_KEY;
 async function Connection() {
   await mongoose.connect(mongoDbUri);
   console.log("connected to DB");
@@ -39,8 +41,6 @@ app.post("/api/signup", async (req, res) => {
 
   // Validate the signup data
   const { error } = signupSchema.validate({ username, password, email });
-
-
 
   if (error) {
     return res
@@ -65,25 +65,24 @@ app.post("/api/signup", async (req, res) => {
 
     res.cookie("username", username);
 
-    const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
+    const token = jwt.sign({ username }, secretKey);
 
     res.cookie("jwt", token);
 
+    console.log("Signup success", username);
+    console.log("Signup success. Token set:", token);
     res.json({
       success: true,
       message: "Signup successful",
       username,
       token,
+      userId: newUser._id,
     });
-    console.log("Signup success",username);
-    console.log("Signup success. Token set:", token);
   } catch (error) {
     console.error("Error during signup:", error);
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 });
-
-
 
 app.post("/api/login", async (req, res) => {
   const { username, password, email } = req.body;
@@ -98,12 +97,13 @@ app.post("/api/login", async (req, res) => {
 
   try {
     const user = await LoginModel.findOne({ username });
+
     await user.save();
 
     if (user) {
       // console.log(user.username);
 
-      const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
+      const token = jwt.sign({ username }, secretKey, { expiresIn: "1h" });
       res.cookie("jwt", token);
       res.cookie("username", username);
       res.json({
@@ -111,8 +111,10 @@ app.post("/api/login", async (req, res) => {
         message: "Login successful",
         username,
         token,
+        userId: user._id,
+        username: user.username,
       });
-      console.log("login success",username);
+      console.log("login success", username);
       console.log("Login success. Token set:", token);
     } else {
       res.status(200).json({ success: false, message: "Invalid credentials" });
@@ -131,7 +133,7 @@ app.post("/api/logout", (req, res) => {
 
 app.post("/api/addEntity", async (req, res) => {
   try {
-    const { error } = addEntitySchema.validate(req.body);
+    const { error } = reviewJoi.validate(req.body);
 
     if (error) {
       return res
@@ -140,7 +142,7 @@ app.post("/api/addEntity", async (req, res) => {
     }
 
     const name = req.body;
-    const newEntity = new UserModel(name);
+    const newEntity = new reviewModel(name);
     let x = await newEntity.save();
 
     res.json({ success: true, message: "Entity added successfully", x });
@@ -163,7 +165,7 @@ app.put("/api/updateEntity/:id", async (req, res) => {
     }
 
     const name = req.body;
-    await UserModel.findByIdAndUpdate(entityId, name);
+    await UserModel.ByIdAndUpdate(entityId, name);
 
     res.json({ success: true, message: "Entity updated successfully" });
   } catch (error) {
@@ -194,9 +196,41 @@ async function GetAll() {
   return result;
 }
 
+async function GetRandomBiryani() {
+  let allBiryanis = await GetAll();
+  if (allBiryanis.length === 0) {
+    return null;
+  }
+  const randomIndex = Math.floor(Math.random() * allBiryanis.length);
+  return allBiryanis[randomIndex];
+}
+
+app.get("/getRandomBiryani", async (req, res) => {
+  try {
+    let randomBiryani = await GetRandomBiryani();
+    res.json({ data: randomBiryani });
+  } catch (error) {
+    console.error("Error fetching random biryani:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
+
 app.get("/getBiryaniP", async (req, res) => {
   let value = await GetAll();
   res.send({ data: value });
+});
+
+app.get("/getUser", async (req, res) => {
+  let x = await LoginModel.find();
+  res.send(x);
+});
+
+app.post("/getAllReview", async (req, res) => {
+  let x = req.body;
+  // res.send(x);
+  let value = await reviewModel.find({ username: x.username });
+  console.log(value);
+  res.send(value);
 });
 
 app.get("/api/protected", verifyToken, (req, res) => {
@@ -207,7 +241,9 @@ function verifyToken(req, res, next) {
   const token = req.cookies.jwt;
 
   if (!token) {
-    return res.status(403).json({ success: false, message: "Token not provided" });
+    return res
+      .status(403)
+      .json({ success: false, message: "Token not provided" });
   }
 
   jwt.verify(token, secretKey, (err, decoded) => {
@@ -220,7 +256,6 @@ function verifyToken(req, res, next) {
     next();
   });
 }
-
 
 Connection().then(() => {
   app.listen(port, () => {

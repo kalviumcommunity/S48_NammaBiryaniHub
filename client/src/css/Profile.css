@@ -1,4 +1,4 @@
-Profile.css
+
 
 .left-pane {
     width: 30%;
@@ -39,5 +39,7 @@ Profile.css
     padding: 20px;
   }
   
-  /* Add your specific profile content styling here */
-  
+  #logoutButton{
+    margin-top: 30px;
+    margin-left: 755px;
+  }  
