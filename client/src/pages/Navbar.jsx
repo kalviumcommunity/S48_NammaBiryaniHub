@@ -1,41 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Cookies from "js-cookie"; // Import js-cookie library
+import Cookies from "js-cookie";
 import "../css/Navbar.css";
+import Revies from "../components/Revies";
+import Image from "../images/asap-chick.png";
 
-// ...
-
-// const username = Cookies.get('username');
-// console.log('Username:', username);
-
-const Navbar = ({  }) => {
-  // const handleLogout = async () => {
-  //   try {
-  //     const response = await fetch("http://your-server-url/api/logout", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       credentials: "include", // Include credentials (cookies) in the request
-  //     });
-
-  //     if (response.ok) {
-  //       // Clear local storage and cookies
-  //       localStorage.removeItem("username");
-  //       Cookies.remove("usernameCookie");
-
-  //       // Invoke the onLogout callback passed from the parent component
-  //       onLogout();
-
-  //       console.log("Logout successful");
-  //     } else {
-  //       console.error("Logout failed");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error during logout:", error);
-  //   }
-  // };
-
+const Navbar = ({}) => {
   const handleSearch = () => {
     console.log("Searching...");
   };
@@ -45,17 +15,18 @@ const Navbar = ({  }) => {
 
   return (
     <nav className="navbar">
-      <div className="logo">
-        <Link to="/">
-          <img src="your-logo.png" alt="Logo" />
-        </Link>
-      </div>
+      <Link to="/">
+        <div className="logo">
+          <img src={Image} alt="" />
+        </div>
+      </Link>
+
       <div className="nav-links">
         <Link id="home" to="/">
           Home
         </Link>
         <div className="search-bar">
-          {/* Implement your search functionality here */}
+          {/* Implement the search functionality here */}
           <input id="searchBar" type="text" placeholder="Search Biryani..." />
           <button id="searchButton" onClick={handleSearch}>
             Search
@@ -69,18 +40,15 @@ const Navbar = ({  }) => {
             <Link id="profile" to="/profile">
               Profile
             </Link>
-            {/* <button id="logoutButton" onClick={handleLogout}>
-              Logout
-            </button> */}
           </>
         ) : (
           <Link id="login" to="/login">
             Login
           </Link>
         )}
-        <Link id="about" to="/about">
-          About
-        </Link>
+        <div id="revies">
+          <Revies />
+        </div>
       </div>
     </nav>
   );

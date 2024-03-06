@@ -1,5 +1,3 @@
-// BiryaniList.jsx
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UpdateEntityForm from "../components/UpdateEntityForm";

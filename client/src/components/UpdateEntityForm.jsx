@@ -89,7 +89,7 @@ const UpdateEntityForm = ({ entityId, onEntityUpdated, fetchData }) => {
       <label>Contact Info:</label>
       <input type="text" value={contactInfo} onChange={(e) => setContactInfo(e.target.value)} /> */}
 
-      <label>Rating:</label>
+      <label>Rating(out of 10) :</label>
       <input type="text" value={rating} onChange={(e) => setRating(e.target.value)} />
 
       <label>Review:</label>

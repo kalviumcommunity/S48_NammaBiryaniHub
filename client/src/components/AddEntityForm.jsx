@@ -1,42 +1,46 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./AddEntityForm.css";
+import Cookies from "js-cookie";
 
 const AddEntityForm = ({ onEntityAdded, fetchData }) => {
   const [dish, setDish] = useState("");
   const [restaurantName, setRestaurantName] = useState("");
-  const [openingHours, setOpeningHours] = useState("");
-  const [cuisineType, setCuisineType] = useState("");
-  const [menu, setMenu] = useState("");
-  const [contactInfo, setContactInfo] = useState("");
+  // const [openingHours, setOpeningHours] = useState("");
+  // const [cuisineType, setCuisineType] = useState("");
+  // const [menu, setMenu] = useState("");
+  // const [contactInfo, setContactInfo] = useState("");
   const [rating, setRating] = useState(""); // New state variable for rating
   const [review, setReview] = useState(""); // New state variable for review
-  const [image, setImage] = useState(""); // New state variable for image
+  // const [image, setImage] = useState(""); // New state variable for image
 
   const handleAddEntity = async () => {
     try {
+      console.log(typeof localStorage.getItem("userID"), "dfsdfsdfdsf");
       const response = await axios.post("http://localhost:3000/api/addEntity", {
         dish: dish,
         restaurantName: restaurantName,
-        openingHours: openingHours,
-        cuisineType: cuisineType,
-        menu: menu.split(",").map((item) => item.trim()),
-        contactInfo: contactInfo,
+        // openingHours: openingHours,
+        // cuisineType: cuisineType,
+        // menu: menu.split(",").map((item) => item.trim()),
+        // contactInfo: contactInfo,
         rating: rating,
         review: review,
-        image: image,
+        userId: localStorage.getItem("userID"),
+        username: Cookies.get("usernameCookie"),
+        // image: image,
       });
 
       if (response.data.success) {
         setDish("");
         setRestaurantName("");
-        setOpeningHours("");
-        setCuisineType("");
-        setMenu("");
-        setContactInfo("");
+        // setOpeningHours("");
+        // setCuisineType("");
+        // setMenu("");
+        // setContactInfo("");
         setRating("");
         setReview("");
-        setImage("");
+        // setImage("");
         console.log(response.data);
         onEntityAdded();
         fetchData();
@@ -64,7 +68,7 @@ const AddEntityForm = ({ onEntityAdded, fetchData }) => {
         onChange={(e) => setRestaurantName(e.target.value)}
       />
 
-      <label>Opening Hours:</label>
+      {/* <label>Opening Hours:</label>
       <input
         type="text"
         value={openingHours}
@@ -90,7 +94,7 @@ const AddEntityForm = ({ onEntityAdded, fetchData }) => {
         type="text"
         value={contactInfo}
         onChange={(e) => setContactInfo(e.target.value)}
-      />
+      /> */}
 
       <label>Rating:</label>
       <input
@@ -106,12 +110,12 @@ const AddEntityForm = ({ onEntityAdded, fetchData }) => {
         onChange={(e) => setReview(e.target.value)}
       />
 
-      <label>Image(address):</label>
+      {/* <label>Image(address):</label>
       <input
         type="text"
         value={image}
         onChange={(e) => setImage(e.target.value)}
-      />
+      /> */}
 
       <button id="add-ent" onClick={handleAddEntity}>
         Add Entity
