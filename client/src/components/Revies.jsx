@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ReviewList from "./ReviewList";
 import { useNavigate } from "react-router-dom";
+import "./Revies.css";
 
 function Revies() {
   let [data, setData] = useState([]);
@@ -20,8 +21,12 @@ function Revies() {
   }
 
   return (
-    <div>
-      <select onChange={(e) => handleClick(e.target.value)}>
+    <div className="revies-container">
+      <select
+        className="revies-select"
+        onChange={(e) => handleClick(e.target.value)}
+      >
+        <option>--Select User--</option>
         {data.map((user) => (
           <option key={user.id} value={user.username}>
             {user.username}
@@ -31,5 +36,4 @@ function Revies() {
     </div>
   );
 }
-
 export default Revies;

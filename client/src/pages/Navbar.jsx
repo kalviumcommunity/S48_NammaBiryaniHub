@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import "../css/Navbar.css";
 import Revies from "../components/Revies";
 import Image from "../images/asap-chick.png";
+import image from "../images/namma-biryani-hub.png"
 
 const Navbar = ({}) => {
   const handleSearch = () => {
@@ -26,11 +27,8 @@ const Navbar = ({}) => {
           Home
         </Link>
         <div className="search-bar">
-          {/* Implement the search functionality here */}
-          <input id="searchBar" type="text" placeholder="Search Biryani..." />
-          <button id="searchButton" onClick={handleSearch}>
-            Search
-          </button>
+          <img id="loggo"src={image} alt="" />
+
         </div>
         <Link id="biryani" to="/all-biryanis">
           Biryani

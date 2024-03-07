@@ -13,7 +13,7 @@ body {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 11vh;
+  height: 80px;
 }
 
 .logo {
@@ -96,4 +96,12 @@ body {
   width: 80px;
   padding: 20px 10px;
   padding-top: 20px;
+}
+
+#loggo{
+  height: 65px;
+  width:510px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color: #333;
 }
