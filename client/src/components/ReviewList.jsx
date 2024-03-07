@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import "./ReviewList.css";
 
 function ReviewList() {
   const { something } = useParams();
@@ -24,10 +25,10 @@ function ReviewList() {
   }, [something]);
 
   return (
-    <div>
+    <div className="review-list">
       <h1>List</h1>
       {data1.map((item, index) => (
-        <div key={index}>
+        <div key={index} className="review-item">
           <h1>{item.dish}</h1>
           <p>{item.review}</p>
         </div>

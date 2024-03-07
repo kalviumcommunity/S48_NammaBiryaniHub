@@ -74,9 +74,10 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <div>
-      <h2>Login/Signup Page</h2>
+    <div className="login-container">
+      <h2>Login / Signup </h2>
       <input
+        className="input-field"
         type="text"
         placeholder="Enter username"
         value={username}
@@ -84,6 +85,7 @@ const Login = ({ onLogin }) => {
       />
       <br />
       <input
+        className="input-field"
         type="password"
         placeholder="Enter password"
         value={password}
@@ -91,14 +93,19 @@ const Login = ({ onLogin }) => {
       />
       <br />
       <input
+        className="input-field"
         type="email"
         placeholder="Enter email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
       <br />
-      <button onClick={handleLogin}>Login</button>
-      <button onClick={handleSignup}>Signup</button>
+      <button className="login-button" onClick={handleLogin}>
+        Login
+      </button>
+      <button className="signup-button" onClick={handleSignup}>
+        Signup
+      </button>
     </div>
   );
 };
