@@ -17,7 +17,7 @@ const AddEntityForm = ({ onEntityAdded, fetchData }) => {
   const handleAddEntity = async () => {
     try {
       console.log(typeof localStorage.getItem("userID"), "dfsdfsdfdsf");
-      const response = await axios.post("http://localhost:3000/api/addEntity", {
+      const response = await axios.post("https://s48-nammabiryanihub.onrender.com/api/addEntity", {
         dish: dish,
         restaurantName: restaurantName,
         // openingHours: openingHours,

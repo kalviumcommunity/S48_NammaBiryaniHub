@@ -11,7 +11,7 @@ const BiryaniList = () => {
 
   const fetchData = () => {
     axios
-      .get("http://localhost:3000/getBiryaniP")
+      .get("https://s48-nammabiryanihub.onrender.com/getBiryaniP")
       .then((response) => {
         setPlaces(response.data.data);
       })

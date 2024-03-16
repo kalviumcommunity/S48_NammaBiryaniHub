@@ -11,7 +11,7 @@ function ReviewList() {
     const fetchData = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:3000/getAllReview",
+          "https://s48-nammabiryanihub.onrender.com/getAllReview",
           { username: something }
         );
         setData(response.data);

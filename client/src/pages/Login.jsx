@@ -12,7 +12,7 @@ const Login = ({ onLogin }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/api/login", {
+      const response = await axios.post("https://s48-nammabiryanihub.onrender.com/api/login", {
         username: username,
         password: password,
         email: email,
@@ -45,7 +45,7 @@ const Login = ({ onLogin }) => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/api/signup", {
+      const response = await axios.post("https://s48-nammabiryanihub.onrender.com/api/signup", {
         username: username,
         password: password,
         email: email,

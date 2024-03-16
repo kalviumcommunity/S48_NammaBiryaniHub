@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ReviewList from "./ReviewList";
 import { useNavigate } from "react-router-dom";
 import "./Revies.css";
 
 function Revies() {
   let [data, setData] = useState([]);
-  let [xdata, xsetData] = useState([]);
+  // let [xdata, xsetData] = useState([]);
 
   let navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:3000/getUser").then((res) => {
+    axios.get("https://s48-nammabiryanihub.onrender.com/getUser").then((res) => {
       setData(res.data);
     });
   }, []);

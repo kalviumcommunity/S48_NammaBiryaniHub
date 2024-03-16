@@ -17,7 +17,7 @@ const UpdateEntityForm = ({ entityId, onEntityUpdated, fetchData }) => {
   useEffect(() => {
     // Make a request to fetch the existing entity details by ID
     axios
-      .get(`http://localhost:3000/api/getEntity/${entityId}`)
+      .get(`https://s48-nammabiryanihub.onrender.com/api/getEntity/${entityId}`)
       .then((response) => {
         console.log("Response from entity details request:", response.data);
         const entityData = response.data.data;
@@ -36,7 +36,7 @@ const UpdateEntityForm = ({ entityId, onEntityUpdated, fetchData }) => {
 
   const handleUpdateEntity = async () => {
     try {
-      const response = await axios.put(`http://localhost:3000/api/updateEntity/${entityId}`, {
+      const response = await axios.put(`https://s48-nammabiryanihub.onrender.com/api/updateEntity/${entityId}`, {
         dish: dish,
         restaurantName: restaurantName,
         // openingHours: openingHours,

@@ -10,7 +10,7 @@ const Home = () => {
     const fetchRandomBiryani = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/getRandomBiryani"
+          "https://s48-nammabiryanihub.onrender.com/getRandomBiryani"
         );
 
         // Check if the response contains data

@@ -21,7 +21,7 @@ const App = () => {
 
   const fetchData = () => {
     axios
-      .get("http://localhost:3000/getBiryaniP")
+      .get("https://s48-nammabiryanihub.onrender.com/getBiryaniP")
       .then((response) => {
         setPlaces(response.data.data);
       })
@@ -38,15 +38,6 @@ const App = () => {
 
   const handleLogin = (username) => {
     setUsername(username);
-  };
-
-  const handleLogout = () => {
-    axios
-      .post("http://localhost:3000/api/logout")
-      .then(() => {
-        setUsername("");
-      })
-      .catch((error) => console.error("Error logging out:", error));
   };
 
   return (

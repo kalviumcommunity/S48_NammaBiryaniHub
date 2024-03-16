@@ -4,7 +4,7 @@ import axios from "axios";
 const DeleteButton = ({ entityId, onEntityDeleted, fetchData }) => {
   const handleDeleteEntity = async () => {
     try {
-      const response = await axios.delete(`http://localhost:3000/api/deleteEntity/${entityId}`);
+      const response = await axios.delete(`https://s48-nammabiryanihub.onrender.com/api/deleteEntity/${entityId}`);
 
       if (response.data.success) {
         onEntityDeleted();

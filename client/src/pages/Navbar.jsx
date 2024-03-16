@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import "../css/Navbar.css";
 import Revies from "../components/Revies";
-import Image from "../images/asap-chick.png";
-import image from "../images/namma-biryani-hub.png"
+import Image from "../assets/asap-chick.png";
+import image from "../assets/namma-biryani-hub.png"
 
 const Navbar = ({}) => {
-  const handleSearch = () => {
-    console.log("Searching...");
-  };
   const username = Cookies.get("usernameCookie");
   let x = localStorage.getItem("username");
   console.log("Username:", username);
