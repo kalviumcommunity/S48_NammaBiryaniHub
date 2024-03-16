@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import "../css/Navbar.css";
 import Revies from "../components/Revies";
-import Image from "../assets/asap-chick.png";
-import image from "../assets/namma-biryani-hub.png"
+import image from "../assets/asap-chick.png";
+import image1 from "../assets/namma-biryani-hub.png"
 
 const Navbar = ({}) => {
   const username = Cookies.get("usernameCookie");
@@ -15,7 +15,7 @@ const Navbar = ({}) => {
     <nav className="navbar">
       <Link to="/">
         <div className="logo">
-          <img src={Image} alt="" />
+          <img src={image} alt="" />
         </div>
       </Link>
 
@@ -24,7 +24,7 @@ const Navbar = ({}) => {
           Home
         </Link>
         <div className="search-bar">
-          <img id="loggo"src={image} alt="" />
+          <img id="loggo"src={image1} alt="" />
 
         </div>
         <Link id="biryani" to="/all-biryanis">
