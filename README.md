@@ -7,4 +7,4 @@
 
 **RENDER** deployed link: https://s48-nammabiryanihub-prabhas-varma.onrender.com/
 
-**CloudFlare** deployed link: https://nammabiryanihub.pages.dev/
+**CloudFlare** deployed link: https://asap-project-namma-biryani.pages.dev/
