@@ -168,7 +168,7 @@ app.put("/api/updateEntity/:id", async (req, res) => {
     await UserModel.ByIdAndUpdate(entityId, name);
 
     res.json({ success: true, message: "Entity updated successfully" });
-  } catch (error) {
+  } catch (error){
     console.error("Error updating entity:", error);
     res
       .status(500)
