@@ -152,6 +152,23 @@ app.post("/api/addEntity", async (req, res) => {
   }
 });
 
+app.get("/api/getEntity/:id", async (req, res) => {
+  try {
+    const entityId = req.params.id;
+    const entity = await UserModel.findById(entityId);
+
+    if (entity) {
+      res.json({ success: true, data: entity });
+    } else {
+      res.status(404).json({ success: false, message: "Entity not found" });
+    }
+  } catch (error) {
+    console.error("Error fetching entity:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
+
+
 app.put("/api/updateEntity/:id", async (req, res) => {
   try {
     const entityId = req.params.id;
@@ -165,14 +182,13 @@ app.put("/api/updateEntity/:id", async (req, res) => {
     }
 
     const name = req.body;
+    console.log(name,"suiiii")
     await UserModel.ByIdAndUpdate(entityId, name);
 
     res.json({ success: true, message: "Entity updated successfully" });
   } catch (error){
     console.error("Error updating entity:", error);
-    res
-      .status(500)
-      .json({ success: false, message: "Failed to update entity" });
+    res.json({ success: false, message: "suiiiiadsfdgtfhyguhjhgmfgbxf" });
   }
 });
 
@@ -234,7 +250,6 @@ app.post("/getAllReview", async (req, res) => {
 });
 
 app.get("/api/protected", verifyToken, (req, res) => {
-  // If the control reaches here, it means the token is valid
   res.json({ success: true, message: "Access to protected resource granted" });
 });
 function verifyToken(req, res, next) {
@@ -251,7 +266,6 @@ function verifyToken(req, res, next) {
       return res.status(401).json({ success: false, message: "Invalid token" });
     }
 
-    // Attach the decoded data to the request object for later use if needed
     req.user = decoded;
     next();
   });

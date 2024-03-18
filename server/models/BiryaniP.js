@@ -4,13 +4,13 @@ const Joi = require("joi");
 const UserSchema = new mongoose.Schema({
   dish: String,
   restaurantName: String,
-  openingHours: String,
-  cuisineType: String,
-  menu: Array,
-  contactInfo: String,
+  // openingHours: String,
+  // cuisineType: String,
+  // menu: Array,
+  // contactInfo: String,
   rating: String,
   review: String,
-  image: String,
+  // image: String,
 });
 
 const UserModel = mongoose.model("place", UserSchema);
