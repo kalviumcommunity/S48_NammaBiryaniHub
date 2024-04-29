@@ -243,8 +243,7 @@ app.get("/getUser", async (req, res) => {
 
 app.post("/getAllReview", async (req, res) => {
   let x = req.body;
-  // res.send(x);
-  let value = await reviewModel.find({ username: x.username });
+   let value = await reviewModel.find({ username: x.username });
   console.log(value);
   res.send(value);
 });

@@ -10,9 +10,8 @@ const AddEntityForm = ({ onEntityAdded, fetchData }) => {
   // const [cuisineType, setCuisineType] = useState("");
   // const [menu, setMenu] = useState("");
   // const [contactInfo, setContactInfo] = useState("");
-  const [rating, setRating] = useState(""); // New state variable for rating
-  const [review, setReview] = useState(""); // New state variable for review
-  // const [image, setImage] = useState(""); // New state variable for image
+  const [rating, setRating] = useState(""); 
+  const [review, setReview] = useState(""); 
 
   const handleAddEntity = async () => {
     try {
@@ -23,7 +22,7 @@ const AddEntityForm = ({ onEntityAdded, fetchData }) => {
         // openingHours: openingHours,
         // cuisineType: cuisineType,
         // menu: menu.split(",").map((item) => item.trim()),
-        // contactInfo: contactInfo,
+        // contactInfo: contactIn1fo,
         rating: rating,
         review: review,
         userId: localStorage.getItem("userID"),
